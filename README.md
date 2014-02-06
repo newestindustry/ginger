@@ -3,8 +3,6 @@ Ginger Rest Framework for GO
 
 The Ginger Rest Framework written in Go!
 
-The idea is the same, only useable in Google's Go this time.
-
 Package documentation can be found at https://godoc.org/github.com/mvmaasakkers/ginger
 
 Implementation is simple:
@@ -27,6 +25,14 @@ func main() {
 
 }
 
+```
+
+When you go to http://localhost:4242/thing the result will be:
+
+```js
+{
+	response: "asdf"
+}
 ```
 
 This is still in early dev phase.
