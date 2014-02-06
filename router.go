@@ -33,7 +33,7 @@ func (r *Router) GetRoutes() (Routes) {
 }
 
 // Add a new route to the routes table
-func (r *Router) AddRoute(url string, handle func(*Ginger) ResponseData) (*Router) {
+func (r *Router) AddRoute(url string, handle func(*Ginger)) (*Router) {
 	route := NewRoute(url, handle)
 	r.Routes = append(r.Routes, route)
 
@@ -58,7 +58,7 @@ func (r *Router) GetCurrent() (Route) {
 }
 
 // Create a new Route
-func NewRoute(url string, handle func(*Ginger) ResponseData) (r Route) {
+func NewRoute(url string, handle func(*Ginger)) (r Route) {
 	r = Route{Url: url, Handler: handle}
 
 	return r

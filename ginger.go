@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type Handle func(*Ginger) ResponseData
+type Handle func(*Ginger)
 
 type Ginger struct {
 	Request Request
@@ -49,22 +49,37 @@ func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 	g.Response = Response{res, nil, 200, "json"}
 	g.Request.Http = req
 	g.ParseRequestHeaders()
-	g.Response.Data = function(g) 
-	g.sendResponse()
+	function(g)
 }
 
-// Send response
-func (g *Ginger) sendResponse() {
+func (g *Ginger) SendResponse(d interface{}) {
 	g.Response.Writer.Header().Set("Server", "Ginger")
-	data := g.setResponse(g.Response.Type)
+	data := g.setResponseData(g.Response.Type, d)
 	g.Response.Writer.WriteHeader(g.Response.Status)
 	g.Response.Writer.Write(data)
 }
 
 // Default 404 handler
-func NotFoundHandler(g *Ginger) (resp ResponseData) {
+func NotFoundHandler(g *Ginger) {
 	g.Response.Status = 404
-	return resp
+	g.SendResponse("Not found")
+}
+
+// Set response header & data and formats data
+func (g *Ginger) setResponseData(accept string, d interface{}) (data []byte) {
+	switch accept {
+		default: 
+			g.Response.Writer.Header().Set("Content-Type", "application/json")
+			data = ToJson(d)
+			break;
+			
+		case "xml":
+			g.Response.Writer.Header().Set("Content-Type", "application/xml")
+			data = ToXml(d)
+			break;
+	}
+	
+	return data
 }
 
 // Set response header and formats data

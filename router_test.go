@@ -42,6 +42,6 @@ func TestRoutesMatch(t *testing.T) {
 	}
 }
 
-func MockCallback(g *Ginger) (resp ResponseData) {
-	return resp
+func MockCallback(g *Ginger) {
+	
 }
