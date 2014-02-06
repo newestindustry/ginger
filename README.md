@@ -1,7 +1,7 @@
 Ginger Rest Framework for GO
 =========
 
-The Ginger Rest Framework written in Go!
+The Ginger Rest API Framework written in Go!
 
 Package documentation can be found at https://godoc.org/github.com/mvmaasakkers/ginger
 
