@@ -11,7 +11,7 @@ Just like the PHP Framework key features include:
 - automatic value casting for data and filter parameters
 - easy creation of routes and handles
 
-[Example implementation](#Implementation)
+[Example implementation](#implementation)
 
 ## Filter parameters
 Filter parameters are key/value parameters passed on to the URI and value casted as described below.
