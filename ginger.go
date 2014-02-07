@@ -18,7 +18,7 @@ type Ginger struct {
 	Router *Router
 }
 
-// Generate a new ginger instance
+// NewGinger generates a new ginger instance
 func NewGinger() (*Ginger) {
 	return &Ginger{}
 }

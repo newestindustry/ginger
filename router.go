@@ -18,11 +18,10 @@ const RouteTypeHead string = "HEAD"
 // RouteTypeOptions is the constant for the POST method
 const RouteTypeOptions string = "OPTIONS"
 
-
 // The Route object is where the routing match url and handler is stored 
 type Route struct {
 	Method string
-	Url string
+	URL string
 	Handler Handle
 	Parameters *Parameters
 }
@@ -41,7 +40,7 @@ func NewRouter() *Router {
 	return &Router{Routes: Routes{}}
 }
 
-// Get the routes table
+// GetRoutes gets the routes table
 func (r *Router) GetRoutes() (Routes) {
 	return r.Routes
 }
@@ -57,13 +56,13 @@ func (r *Router) AddRoute(method string, url string, handle func(*Ginger)) (*Rou
 // Match the request url against a route to see if there is one found
 func (r *Router) Match(method string, url string) (Route, error) {
 	for _, route := range r.Routes {
-		if strings.HasPrefix(url, route.Url) == true && route.Method == method {
+		if strings.HasPrefix(url, route.URL) == true && route.Method == method {
 			r.Current = route
 			return route, nil
 		} 
 	}
 	
-	return Route{}, errors.New("Couldn't match route")
+	return Route{}, errors.New("couldn't match route")
 }
 
 // GetCurrent get the current matched route
@@ -73,7 +72,7 @@ func (r *Router) GetCurrent() (Route) {
 
 // NewRoute creates a new Route
 func NewRoute(method string, url string, handle func(*Ginger)) (r Route) {
-	r = Route{Method: method, Url: url, Handler: handle}
+	r = Route{Method: method, URL: url, Handler: handle}
 
 	return r
 }

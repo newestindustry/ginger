@@ -28,6 +28,8 @@ type StringResponse struct  {
 	Response string `json:"response" xml:"response"`
 }
 
+// FixResponseData creates a StringResponse if just a string is
+// passed
 func FixResponseData(data interface{}) interface{} {
 	if data != nil {
 		if reflect.TypeOf(data).String() == "string" {

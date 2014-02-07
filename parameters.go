@@ -30,7 +30,7 @@ func ParseDataParameters(data url.Values) (Parameters) {
 // ParseFilterParameters parses the filter parameters from the current url based
 // on the current route
 func (r *Route) ParseFilterParameters(url string) (Parameters) {
-	route := r.Url
+	route := r.URL
 
 	params := Parameters{}
 	bare := strings.Replace(url, route, "", -1)
