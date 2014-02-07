@@ -38,11 +38,12 @@ These values can be used any way you'd like. What we usually do is pass them on 
 ## Value casting
 We try to cast all incoming values to their correct datatype for ease of use. The datatypes currently supported are:
 
-Type|Possible value|Description
-integer|42|Strings which are numeric are cast to an integer
-float|42.24|Strings which are floating point decimals are cast to a floating point decimal
-boolean|true|If a parameter is “true” or “false” it is cast as a boolean
-default|Just a bunch of characters|Default behavior is to cast as string.
+| Type | Possible value | Description |
+| ------ | ---- | ------ |
+| integer | 42 | Strings which are numeric are cast to an integer |
+| float | 42.24 | Strings which are floating point decimals are cast to a floating point decimal |
+| boolean | true | If a parameter is “true” or “false” it is cast as a boolean |
+| default | Just a bunch of characters | Default behavior is to cast as string. |
 
 
 ## Implementation
