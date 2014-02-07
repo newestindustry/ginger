@@ -17,12 +17,12 @@ import (
 func main() {
 	g := ginger.Init()
 	
-	g.Router.AddRoute("GET", "/thing", func(g *ginger.Ginger) {
+	g.Router.AddRoute(ginger.ROUTE_TYPE_GET, "/thing", func(g *ginger.Ginger) {
 							
 							g.SendResponse(g.Request.Filter)
 					  })
 					  
-	g.Router.AddRoute("POST", "/thing", func(g *ginger.Ginger) {
+	g.Router.AddRoute(ginger.ROUTE_TYPE_POST, "/thing", func(g *ginger.Ginger) {
 							
 							g.SendResponse(g.Request.Data)
 					  })				  

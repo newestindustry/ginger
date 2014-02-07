@@ -6,11 +6,13 @@ import (
 	"math"
 	"reflect"
 	"strconv"
-	"fmt"
 )
 
 type Parameters map[string]interface{}
 
+// Parse the "data" parameters. These are coming from 
+// url.Values (coming from http.ParseForm) and returns
+// The casted parameters
 func ParseDataParameters(data url.Values) (Parameters) {
 	params := Parameters{}
 	
@@ -18,15 +20,13 @@ func ParseDataParameters(data url.Values) (Parameters) {
 		if len(val) > 0 {
 			params[key] = CastParameterValue(val[0])
 		}
-//		params[key] = CastParameterValue(val[0])
-//		fmt.Println(key, val[0])
 	}
-	
-	fmt.Println(params)
-	
+
 	return params
 }
 
+// Parse the filter parameters from the current url based
+// on the current route
 func (r *Route) ParseFilterParameters(url string) (Parameters) {
 	route := r.Url
 
@@ -58,6 +58,7 @@ func (r *Route) ParseFilterParameters(url string) (Parameters) {
 	return params
 }
 
+// Cast a value to it's correct value part for easy usage
 func CastParameterValue(value interface{}) interface{} {
 	if reflect.TypeOf(value).String() == "string" {
 		stringvalue := value.(string)

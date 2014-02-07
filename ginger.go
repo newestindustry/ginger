@@ -15,10 +15,13 @@ type Ginger struct {
 	Router *Router
 }
 
+
 func NewGinger() (*Ginger) {
 	return &Ginger{}
 }
 
+// Initialize the ginger framework
+// Set default options an router object
 func Init() (*Ginger) {
 	g := NewGinger()
 	g.Options = &Options{"localhost", 4242}
@@ -26,6 +29,7 @@ func Init() (*Ginger) {
 	return g
 }
 
+// Start the http server on the port set in options
 func (g *Ginger) Run() {
 	http.HandleFunc("/", g.Handle)
 	err := http.ListenAndServe(fmt.Sprintf("%s:%d", g.Options.Hostname, g.Options.Port), nil)
@@ -34,6 +38,8 @@ func (g *Ginger) Run() {
 	}
 }
 
+// Read headers, check the current route, parse the parameters
+// and call the Handle function with the Ginger object
 func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 	g.Request.Headers = req.Header
 	var function Handle
@@ -59,6 +65,8 @@ func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 	function(g)
 }
 
+// Send data d back to the client
+// Set the response headers as well
 func (g *Ginger) SendResponse(d interface{}) {
 	g.Response.Writer.Header().Set("Server", "Ginger")
 	data := g.setResponseData(g.Response.Type, d)

@@ -2,7 +2,6 @@ package ginger
 
 import (
 	"net/http"
-//	"net/url"
 )
 
 // Ginger's request object
