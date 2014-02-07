@@ -5,11 +5,10 @@ import (
 	"net/http"
 	"encoding/json"
 	"reflect"
+	"log"
 )
 
-type ResponseData interface{}
-
-// The main response object
+// Response is the main response object
 type Response struct {
 	// Contains the http Response Writer so we can easily send a response
 	Writer http.ResponseWriter
@@ -21,7 +20,7 @@ type Response struct {
 	Type string
 }
 
-// If the Response.Data structure is just a string
+// StringResponse makes sure that if the Response.Data structure is just a string
 // We cast it in a string response before sending it
 // so you can get a nice structure
 type StringResponse struct  {
@@ -39,9 +38,9 @@ func FixResponseData(data interface{}) interface{} {
 	return data
 }
 
-// Helper function for casting a data structure into
+// ToJSON is a helper function for casting a data structure into
 // a json byte slice
-func ToJson(data interface{}) (b []byte){
+func ToJSON(data interface{}) (b []byte){
 	data = FixResponseData(data)
 	
 	b, err := json.Marshal(data)
@@ -51,13 +50,14 @@ func ToJson(data interface{}) (b []byte){
 	return b
 }
 
-// Helper function for casting a data structure into
+// ToXML is a helper function for casting a data structure into
 // a xml byte slice
-func ToXml(data interface{}) (b []byte){
+func ToXML(data interface{}) (b []byte){
 	data = FixResponseData(data)
 	
 	b, err := xml.MarshalIndent(data, "", "  ")
 	if err != nil {
+		log.Println(err)
 		return b
     }
 	return b

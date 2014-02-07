@@ -5,12 +5,18 @@ import (
 	"errors"
 )
 
-const ROUTE_TYPE_GET string = "GET"
-const ROUTE_TYPE_POST string = "POST"
-const ROUTE_TYPE_PUT string = "PUT"
-const ROUTE_TYPE_DELETE string = "DELETE"
-const ROUTE_TYPE_HEAD string = "HEAD"
-const ROUTE_TYPE_OPTIONS string = "OPTIONS"
+// RouteTypeGet is the constant for the GET method
+const RouteTypeGet string = "GET"
+// RouteTypePost is the constant for the POST method
+const RouteTypePost string = "POST"
+// RouteTypePut is the constant for the POST method
+const RouteTypePut string = "PUT"
+// RouteTypeDelete is the constant for the POST method
+const RouteTypeDelete string = "DELETE"
+// RouteTypeHead is the constant for the POST method
+const RouteTypeHead string = "HEAD"
+// RouteTypeOptions is the constant for the POST method
+const RouteTypeOptions string = "OPTIONS"
 
 
 // The Route object is where the routing match url and handler is stored 
@@ -24,7 +30,7 @@ type Route struct {
 // Routes is the slice of routes
 type Routes []Route
 
-// The router object holds the routes table and the current route
+// Router holds the routes table and the current route (if matched)
 type Router struct {
 	Routes Routes
 	Current Route
@@ -40,7 +46,7 @@ func (r *Router) GetRoutes() (Routes) {
 	return r.Routes
 }
 
-// Add a new route to the routes table
+// AddRoute adds a new route to the routes table
 func (r *Router) AddRoute(method string, url string, handle func(*Ginger)) (*Router) {
 	route := NewRoute(method, url, handle)
 	r.Routes = append(r.Routes, route)
@@ -60,12 +66,12 @@ func (r *Router) Match(method string, url string) (Route, error) {
 	return Route{}, errors.New("Couldn't match route")
 }
 
-// Get the current matched route
+// GetCurrent get the current matched route
 func (r *Router) GetCurrent() (Route) {
 	return r.Current
 }
 
-// Create a new Route
+// NewRoute creates a new Route
 func NewRoute(method string, url string, handle func(*Ginger)) (r Route) {
 	r = Route{Method: method, Url: url, Handler: handle}
 

@@ -8,9 +8,11 @@ import (
 	"strconv"
 )
 
+
+// Parameters container
 type Parameters map[string]interface{}
 
-// Parse the "data" parameters. These are coming from 
+// ParseDataParameters parses the "data" parameters. These are coming from 
 // url.Values (coming from http.ParseForm) and returns
 // The casted parameters
 func ParseDataParameters(data url.Values) (Parameters) {
@@ -25,7 +27,7 @@ func ParseDataParameters(data url.Values) (Parameters) {
 	return params
 }
 
-// Parse the filter parameters from the current url based
+// ParseFilterParameters parses the filter parameters from the current url based
 // on the current route
 func (r *Route) ParseFilterParameters(url string) (Parameters) {
 	route := r.Url
@@ -58,7 +60,7 @@ func (r *Route) ParseFilterParameters(url string) (Parameters) {
 	return params
 }
 
-// Cast a value to it's correct value part for easy usage
+// CastParameterValue casts a value to it's correct value part for easy usage
 func CastParameterValue(value interface{}) interface{} {
 	if reflect.TypeOf(value).String() == "string" {
 		stringvalue := value.(string)

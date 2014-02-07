@@ -4,16 +4,17 @@ import (
 	"net/http"
 )
 
-// Ginger's request object
+// Request object for Ginger Framework
 type Request struct {
-	Http *http.Request
+	HTTP *http.Request
 	Headers http.Header
 	Method string
 	Data Parameters
 	Filter Parameters
 }
 
-// Do stuff with request headers
+// ParseRequestHeaders parses the request headers
+// like accept or authentication
 func (g *Ginger) ParseRequestHeaders() {
 	accept := g.Request.Headers["Accept"]
 	
