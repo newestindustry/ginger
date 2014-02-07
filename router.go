@@ -5,6 +5,14 @@ import (
 	"errors"
 )
 
+const ROUTE_TYPE_GET string = "GET"
+const ROUTE_TYPE_POST string = "POST"
+const ROUTE_TYPE_PUT string = "PUT"
+const ROUTE_TYPE_DELETE string = "DELETE"
+const ROUTE_TYPE_HEAD string = "HEAD"
+const ROUTE_TYPE_OPTIONS string = "OPTIONS"
+
+
 // The Route object is where the routing match url and handler is stored 
 type Route struct {
 	Method string
@@ -33,17 +41,17 @@ func (r *Router) GetRoutes() (Routes) {
 }
 
 // Add a new route to the routes table
-func (r *Router) AddRoute(url string, handle func(*Ginger)) (*Router) {
-	route := NewRoute(url, handle)
+func (r *Router) AddRoute(method string, url string, handle func(*Ginger)) (*Router) {
+	route := NewRoute(method, url, handle)
 	r.Routes = append(r.Routes, route)
 
 	return r
 }
 
 // Match the request url against a route to see if there is one found
-func (r *Router) Match(url string) (Route, error) {
+func (r *Router) Match(method string, url string) (Route, error) {
 	for _, route := range r.Routes {
-		if strings.HasPrefix(url, route.Url) == true{
+		if strings.HasPrefix(url, route.Url) == true && route.Method == method {
 			r.Current = route
 			return route, nil
 		} 
@@ -58,8 +66,8 @@ func (r *Router) GetCurrent() (Route) {
 }
 
 // Create a new Route
-func NewRoute(url string, handle func(*Ginger)) (r Route) {
-	r = Route{Url: url, Handler: handle}
+func NewRoute(method string, url string, handle func(*Ginger)) (r Route) {
+	r = Route{Method: method, Url: url, Handler: handle}
 
 	return r
 }

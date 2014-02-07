@@ -38,7 +38,7 @@ func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 	g.Request.Headers = req.Header
 	var function Handle
 	
-	current, err := g.Router.Match(fmt.Sprintf("%s", req.URL))
+	current, err := g.Router.Match(req.Method, fmt.Sprintf("%s", req.URL))
 	if err != nil {
 		function = NotFoundHandler
 		log.Printf("No route found in %s", req.URL) 
@@ -48,7 +48,14 @@ func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 
 	g.Response = Response{res, nil, 200, "json"}
 	g.Request.Http = req
+	g.Request.Method = req.Method
+	g.Request.Filter = current.ParseFilterParameters(fmt.Sprintf("%s", req.URL))
+	if req.Method == "POST" || req.Method == "PUT" {
+		req.ParseForm()
+		g.Request.Data = ParseDataParameters(req.Form)
+	}
 	g.ParseRequestHeaders()
+	
 	function(g)
 }
 
@@ -76,23 +83,6 @@ func (g *Ginger) setResponseData(accept string, d interface{}) (data []byte) {
 		case "xml":
 			g.Response.Writer.Header().Set("Content-Type", "application/xml")
 			data = ToXml(d)
-			break;
-	}
-	
-	return data
-}
-
-// Set response header and formats data
-func (g *Ginger) setResponse(accept string) (data []byte) {
-	switch accept {
-		default: 
-			g.Response.Writer.Header().Set("Content-Type", "application/json")
-			data = ToJson(g.Response.Data)
-			break;
-			
-		case "xml":
-			g.Response.Writer.Header().Set("Content-Type", "application/xml")
-			data = ToXml(g.Response.Data)
 			break;
 	}
 	

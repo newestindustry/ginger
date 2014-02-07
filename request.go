@@ -2,12 +2,16 @@ package ginger
 
 import (
 	"net/http"
+//	"net/url"
 )
 
 // Ginger's request object
 type Request struct {
 	Http *http.Request
 	Headers http.Header
+	Method string
+	Data Parameters
+	Filter Parameters
 }
 
 // Do stuff with request headers

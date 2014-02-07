@@ -9,10 +9,10 @@ var routertest *Router
 
 func init() {
 	routertest = NewRouter()
-	routertest.AddRoute("/a", MockCallback)
-	routertest.AddRoute("/b", MockCallback)
-	routertest.AddRoute("/c", MockCallback)
-	routertest.AddRoute("/ca", MockCallback)
+	routertest.AddRoute("GET", "/a", MockCallback)
+	routertest.AddRoute("GET", "/b", MockCallback)
+	routertest.AddRoute("GET", "/c", MockCallback)
+	routertest.AddRoute("GET", "/ca", MockCallback)
 	routestest = routertest.GetRoutes()
 }
 
@@ -35,7 +35,7 @@ var matchTests = []struct {
 
 func TestRoutesMatch(t *testing.T) {
 	for i, tt := range matchTests {
-		route, _ := routertest.Match(tt.in)
+		route, _ := routertest.Match("GET", tt.in)
 		if route.Url != tt.out {
 			t.Errorf("%d. routes.Match(%q) => %s returned, expected %s", i, tt.in, route.Url, tt.out)
 		}
