@@ -11,6 +11,8 @@ Just like the PHP Framework key features include:
 - automatic value casting for data and filter parameters
 - easy creation of routes and handles
 
+[Example implementation](#Implementation)
+
 ## Filter parameters
 Filter parameters are key/value parameters passed on to the URI and value casted as described below.
 Say we have a route GET /thing/ and a GET request to /thing/id/212/public/true is sent, the values will be parsed in to a Paramers object (g.Request.Filter) looking like:
@@ -51,11 +53,16 @@ We try to cast all incoming values to their correct datatype for ease of use. Th
 
 Implementation is simple:
 
+```bash
+go get github.com/newestindustry/ginger
+```
+
+
 ```Go
 package main
 
 import (
-	"ni.nl/ginger"
+	"github.com/newestindustry/ginger"
 )
 
 func main() {
