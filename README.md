@@ -15,7 +15,7 @@ Just like the PHP Framework key features include:
 Filter parameters are key/value parameters passed on to the URI and value casted as described below.
 Say we have a route GET /thing/ and a GET request to /thing/id/212/public/true is sent, the values will be parsed in to a Paramers object (g.Request.Filter) looking like:
 
-```
+```go
 g.Request.Filter["id"] = 212
 g.Request.Filter["public"] = true
 ```
@@ -26,7 +26,7 @@ These values can be used any way you'd like. What we usually do is pass them on 
 Data parameters are postfield parameters and value casted as described below.
 Say we have a route POST /thing/ and a POST request with postdata name=Thing&public=false&sortorder=42 is sent, the values will be parsed in to a Paramers object (g.Request.Data) looking like:
 
-```
+```go
 g.Request.Data["name"] = "Thing"
 g.Request.Data["public"] = false
 g.Request.Data["sortorder"] = 42
