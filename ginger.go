@@ -27,7 +27,7 @@ func NewGinger() (*Ginger) {
 // Set default options an router object
 func Init() (*Ginger) {
 	g := NewGinger()
-	g.Options = &Options{"localhost", 4242}
+	g.Options = &Options{"", 4242}
 	g.Router = NewRouter()
 	return g
 }
@@ -39,6 +39,11 @@ func (g *Ginger) Run() {
 	if err != nil {
 		log.Fatal("Something went wrong: ", err)
 	}
+}
+
+// AddStatic allows you to serve static files/dirs
+func (g *Ginger) AddStatic(prefix string, dir string) {
+	http.Handle(prefix, http.StripPrefix(prefix, http.FileServer(http.Dir(dir))))
 }
 
 // Handle reads headers, check the current route, parse the parameters
