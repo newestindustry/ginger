@@ -1,9 +1,9 @@
 package ginger
 
 import (
-	"net/http"
-	"log"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 // Handle is the handle function type passing ginger object
@@ -12,20 +12,20 @@ type Handle func(*Ginger)
 // Ginger struct holds the request, response, options and main
 // router object
 type Ginger struct {
-	Request Request
+	Request  Request
 	Response Response
-	Options *Options
-	Router *Router
+	Options  *Options
+	Router   *Router
 }
 
 // NewGinger generates a new ginger instance
-func NewGinger() (*Ginger) {
+func NewGinger() *Ginger {
 	return &Ginger{}
 }
 
 // Init initializes the ginger framework
 // Set default options an router object
-func Init() (*Ginger) {
+func Init() *Ginger {
 	g := NewGinger()
 	g.Options = &Options{"", 4242}
 	g.Router = NewRouter()
@@ -51,11 +51,11 @@ func (g *Ginger) AddStatic(prefix string, dir string) {
 func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 	g.Request.Headers = req.Header
 	var function Handle
-	
+
 	current, err := g.Router.Match(req.Method, fmt.Sprintf("%s", req.URL))
 	if err != nil {
 		function = NotFoundHandler
-		log.Printf("No route found in %s %s", req.Method, req.URL) 
+		log.Printf("No route found in %s %s", req.Method, req.URL)
 	} else {
 		function = current.Handler
 	}
@@ -69,7 +69,7 @@ func (g *Ginger) Handle(res http.ResponseWriter, req *http.Request) {
 		g.Request.Data = ParseDataParameters(req.Form)
 	}
 	g.ParseRequestHeaders()
-	
+
 	function(g)
 }
 
@@ -91,16 +91,16 @@ func NotFoundHandler(g *Ginger) {
 // Set response header & data and formats data
 func (g *Ginger) setResponseData(accept string, d interface{}) (data []byte) {
 	switch accept {
-		default: 
-			g.Response.Writer.Header().Set("Content-Type", "application/json")
-			data = ToJSON(d)
-			break;
-			
-//		case "xml":
-//			g.Response.Writer.Header().Set("Content-Type", "application/xml")
-//			data = ToXML(d)
-//			break;
+	default:
+		g.Response.Writer.Header().Set("Content-Type", "application/json")
+		data = ToJSON(d)
+		break
+
+	case "html":
+		g.Response.Writer.Header().Set("Content-Type", "text/html")
+		data = []byte(d.(string))
+		break
 	}
-	
+
 	return data
 }
